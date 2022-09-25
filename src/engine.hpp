@@ -26,7 +26,7 @@ class Value {
     }
 
     Value operator-(const Value& rhs) {
-        return Value(this->data - rhs.data, "+");
+        return Value(this->data - rhs.data, "-");
     }
 
     Value operator*(const Value& rhs) {
@@ -34,7 +34,7 @@ class Value {
     }
 
     Value operator/(const Value& rhs) {
-        return Value(this->data / rhs.data, "*");
+        return Value(this->data / rhs.data, "/");
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Value& v) {
