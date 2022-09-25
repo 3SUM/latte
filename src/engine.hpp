@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <cmath>
 
 namespace speedy {
 
@@ -35,6 +36,10 @@ class Value {
 
     Value operator/(const Value& rhs) {
         return Value(this->data / rhs.data, "/");
+    }
+
+    Value pow(T _e) {
+        return Value(std::pow(this->data, _e), "**");
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Value& v) {
