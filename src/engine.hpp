@@ -1,18 +1,20 @@
 #pragma once
 
 #include <cmath>
+#include <concepts>
 #include <string>
 
 namespace speedy {
 
-template <class T>
+template <typename T>
+requires std::integral<T> || std::floating_point<T>
 class Value {
    private:
     T data{};
     std::string op;
 
    public:
-    Value(){};
+    Value() {};
     Value(T _data) : data(_data), op("") {}
     Value(T _data, std::string _op) : data(_data), op(_op) {}
     Value(const Value<T>& rhs) : data(rhs.data), op(rhs.op) {}

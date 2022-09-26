@@ -4,13 +4,13 @@
 using namespace speedy;
 
 int main() {
-    Value<int> a(10);
-    Value<int> b(15);
-    Value<int> c(5);
-    Value<int> d = a * b;
-    Value<int> e = d / c;
-    Value<int> f = e + 5 - 20;
-    Value<int> h = f.pow(2);
+    Value a(10);
+    Value b(15);
+    Value c(5);
+    Value d = a * b;
+    Value e = d / c;
+    Value f = e + 5 - 20;
+    Value h = f.pow(2);
     Value<int> hh;
     std::cout << a << std::endl;
     std::cout << b << std::endl;
