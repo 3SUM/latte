@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <cmath>
+#include <string>
 
 namespace speedy {
 
@@ -36,6 +36,10 @@ class Value {
 
     Value operator/(const Value& rhs) {
         return Value(this->data / rhs.data, "/");
+    }
+
+    bool operator!() const {
+        return this->data == 0;
     }
 
     Value pow(T _e) {
