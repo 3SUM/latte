@@ -11,6 +11,7 @@ int main() {
     Value<int> e = d / c;
     Value<int> f = e + 5 - 20;
     Value<int> h = f.pow(2);
+    Value<int> hh;
     std::cout << a << std::endl;
     std::cout << b << std::endl;
     std::cout << c << std::endl;
@@ -18,5 +19,6 @@ int main() {
     std::cout << e << std::endl;
     std::cout << f << std::endl;
     std::cout << h << std::endl;
+    std::cout << hh << std::endl;
     return 0;
 }
