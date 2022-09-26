@@ -9,7 +9,7 @@ int main() {
     Value c(5);
     Value d = a * b;
     Value e = d / c;
-    Value f = e + 5 - 20;
+    Value f = 5 + e;
     Value h = f.pow(2);
     Value<int> hh;
     std::cout << a << std::endl;

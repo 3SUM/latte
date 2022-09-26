@@ -14,7 +14,7 @@ class Value {
     std::string op;
 
    public:
-    Value() {};
+    Value(){};
     Value(T _data) : data(_data), op("") {}
     Value(T _data, std::string _op) : data(_data), op(_op) {}
     Value(const Value<T>& rhs) : data(rhs.data), op(rhs.op) {}
@@ -25,20 +25,20 @@ class Value {
         return *this;
     }
 
-    Value operator+(const Value& rhs) {
-        return Value(this->data + rhs.data, "+");
+    friend Value operator+(const Value& lhs, const Value& rhs) {
+        return Value(lhs.data + rhs.data, "+");
     }
 
-    Value operator-(const Value& rhs) {
-        return Value(this->data - rhs.data, "-");
+    friend Value operator-(const Value& lhs, const Value& rhs) {
+        return Value(lhs.data - rhs.data, "-");
     }
 
-    Value operator*(const Value& rhs) {
-        return Value(this->data * rhs.data, "*");
+    friend Value operator*(const Value& lhs, const Value& rhs) {
+        return Value(lhs.data * rhs.data, "*");
     }
 
-    Value operator/(const Value& rhs) {
-        return Value(this->data / rhs.data, "/");
+    friend Value operator/(const Value& lhs, const Value& rhs) {
+        return Value(lhs.data / rhs.data, "/");
     }
 
     bool operator!() const {
