@@ -20,5 +20,8 @@ int main() {
     std::cout << f << std::endl;
     std::cout << h << std::endl;
     std::cout << hh << std::endl;
+
+    // Due to c++20 concepts, Value class does not accept strings
+    //Value<std::string> error;
     return 0;
 }
