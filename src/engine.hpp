@@ -28,7 +28,7 @@ class Value {
     std::string op;
 
    public:
-    Value()=default;
+    Value() = default;
     Value(T _data, std::string _op = "") : data(_data), op(_op) {}
     Value(T _data, std::pair<Value, Value> _children, std::string _op) {
         data = _data;
