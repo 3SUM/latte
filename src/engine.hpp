@@ -68,8 +68,16 @@ class Value {
         return Value(std::pow(this->data, _e), std::make_pair(*this, Value(_e)), "**" + std::to_string(_e));
     }
 
+    T get_data() const {
+        return data;
+    }
+
     std::set<std::pair<Value, Value>, Comparator> get_children() const {
         return prev;
+    }
+
+    std::string get_op() const {
+        return op;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Value& v) {
