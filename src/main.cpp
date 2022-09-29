@@ -12,8 +12,8 @@ int main() {
     Value d = a * b + c;
     Value e = d.pow(2);
     std::cout << d << std::endl;
-    std::cout << d.get_children() << std::endl;
+    std::cout << d.get_prev() << std::endl;
     std::cout << e << std::endl;
-    std::cout << e.get_children() << std::endl;
+    std::cout << e.get_prev() << std::endl;
     return 0;
 }

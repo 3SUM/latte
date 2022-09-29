@@ -8,6 +8,8 @@
 
 namespace speedy {
 
+static_assert(sizeof(float) * CHAR_BIT == 32, "require 32 bits floats");
+
 template <typename T>
 requires std::integral<T> || std::floating_point<T>
 class Value {
@@ -24,15 +26,16 @@ class Value {
     };
 
     T data{};
+    float grad;
     std::set<std::pair<Value, Value>, Comparator> prev;
     std::string op;
 
    public:
     Value() = default;
-    Value(T _data, std::string _op = "") : data(_data), op(_op) {}
-    Value(T _data, std::pair<Value, Value> _children, std::string _op) {
+    Value(T _data, std::pair<Value, Value> _prev = {Value(), Value()}, std::string _op = "") {
         data = _data;
-        prev.insert(_children);
+        grad = 0.0;
+        prev.insert(_prev);
         op = _op;
     }
 
@@ -72,7 +75,7 @@ class Value {
         return data;
     }
 
-    std::set<std::pair<Value, Value>, Comparator> get_children() const {
+    std::set<std::pair<Value, Value>, Comparator> get_prev() const {
         return prev;
     }
 
