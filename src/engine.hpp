@@ -8,7 +8,7 @@
 
 namespace speedy {
 
-static_assert(sizeof(float) * CHAR_BIT == 32, "require 32 bits floats");
+static_assert(sizeof(float) * CHAR_BIT == 32, "32-bit floats required!");
 
 template <typename T>
 requires std::integral<T> || std::floating_point<T>
