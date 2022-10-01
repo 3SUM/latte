@@ -3,7 +3,7 @@
 
 #include "engine.hpp"
 
-using namespace speedy;
+using namespace latte;
 
 int main() {
     Value a(2.0);

@@ -1,12 +1,12 @@
 <br>
 
 <p align="center">
-<a href="https://github.com/3SUM"><img width="200" src="./logo/speedy.png" alt="Speedy logo"></a>
+<a href="https://github.com/3SUM"><img width="200" src="./logo/latte.png" alt="Latte logo"></a>
 </p>
 
 <br>
 
-# Speedy
+# Latte
 
 Mini Autograd engine for `C++` based on [micrograd](https://github.com/karpathy/micrograd).
 

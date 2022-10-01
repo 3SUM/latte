@@ -2,11 +2,12 @@
 
 #include <cmath>
 #include <concepts>
+#include <functional>
 #include <set>
 #include <string>
 #include <utility>
 
-namespace speedy {
+namespace latte {
 
 static_assert(sizeof(float) * CHAR_BIT == 32, "32-bit floats required!");
 
@@ -27,6 +28,7 @@ class Value {
 
     T data{};
     float grad;
+    std::function<void()> _backward;
     std::set<std::pair<Value, Value>, Comparator> prev;
     std::string op;
 
@@ -48,6 +50,7 @@ class Value {
     }
 
     friend Value operator+(const Value& lhs, const Value& rhs) {
+
         return Value(lhs.data + rhs.data, std::make_pair(lhs, rhs), "+");
     }
 
@@ -96,4 +99,4 @@ class Value {
     }
 };
 
-}  // namespace speedy
+}  // namespace latte
