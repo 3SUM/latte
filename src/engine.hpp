@@ -3,9 +3,11 @@
 #include <cmath>
 #include <concepts>
 #include <functional>
+#include <iomanip>
 #include <set>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace latte {
 
@@ -28,17 +30,32 @@ class Value {
 
     T data{};
     float grad;
-    std::function<void()> _backward;
+    std::function<void()> backward;
     std::set<std::pair<Value, Value>, Comparator> prev;
-    std::string op;
+    char op;
+    std::string label;
 
    public:
     Value() = default;
-    Value(T _data, std::pair<Value, Value> _prev = {Value(), Value()}, std::string _op = "") {
+    Value(T _data, std::pair<Value, Value> _prev = {Value(), Value()}, char _op = '\0') {
         data = _data;
         grad = 0.0;
         prev.insert(_prev);
         op = _op;
+        label = "";
+
+        if (_prev.first.data != T() && _prev.second.data != T()) {
+            switch (op) {
+                case '+':
+                    backward = [&_prev, this]() { _prev.first.grad += grad; _prev.second.grad += grad; };
+                    break;
+                case '*':
+                    backward = [&_prev, this]() { _prev.first.grad += _prev.second.data * grad; _prev.second.grad += _prev.first.data * grad; };
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     Value(const Value<T>& rhs) : data(rhs.data), op(rhs.op) {}
@@ -50,20 +67,19 @@ class Value {
     }
 
     friend Value operator+(const Value& lhs, const Value& rhs) {
-
-        return Value(lhs.data + rhs.data, std::make_pair(lhs, rhs), "+");
+        return Value(lhs.data + rhs.data, std::make_pair(lhs, rhs), '+');
     }
 
     friend Value operator-(const Value& lhs, const Value& rhs) {
-        return Value(lhs.data - rhs.data, std::make_pair(lhs, rhs), "-");
+        return Value(lhs.data - rhs.data, std::make_pair(lhs, rhs), '-');
     }
 
     friend Value operator*(const Value& lhs, const Value& rhs) {
-        return Value(lhs.data * rhs.data, std::make_pair(lhs, rhs), "*");
+        return Value(lhs.data * rhs.data, std::make_pair(lhs, rhs), '*');
     }
 
     friend Value operator/(const Value& lhs, const Value& rhs) {
-        return Value(lhs.data / rhs.data, std::make_pair(lhs, rhs), "/");
+        return Value(lhs.data / rhs.data, std::make_pair(lhs, rhs), '/');
     }
 
     bool operator!() const {
@@ -71,7 +87,7 @@ class Value {
     }
 
     Value pow(T _e) {
-        return Value(std::pow(this->data, _e), std::make_pair(*this, Value(_e)), "**" + std::to_string(_e));
+        return Value(std::pow(this->data, _e), std::make_pair(*this, Value(_e)), '^');
     }
 
     T get_data() const {
@@ -82,18 +98,30 @@ class Value {
         return prev;
     }
 
-    std::string get_op() const {
+    char get_op() const {
         return op;
     }
 
+    void set_label(const std::string _label) {
+        label = _label;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const Value& v) {
-        os << "Value (data = " << v.data << ")";
+        os << std::fixed;
+        os << std::setprecision(2);
+
+        if (v.label != "") {
+            os << "Value " << v.label << " (data = " << v.data << ", grad = " << v.grad << ")";
+        } else {
+            os << "Value (data = " << v.data << ", grad = " << v.grad << ")";
+        }
+
         return os;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const std::set<std::pair<Value, Value>, Comparator>& sp) {
         for (auto const& it : sp) {
-            os << "{" << it.first << ", " << it.second << "} ";
+            os << "{" << it.first << ", " << it.second << "}";
         }
         return os;
     }

@@ -11,6 +11,8 @@ int main() {
     Value c(10.0);
     Value d = a * b + c;
     Value e = d.pow(2);
+    d.set_label("d");
+    e.set_label("e");
     std::cout << d << std::endl;
     std::cout << d.get_prev() << std::endl;
     std::cout << e << std::endl;
