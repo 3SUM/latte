@@ -8,6 +8,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <stack>
 
 namespace latte {
 
@@ -39,7 +40,7 @@ class Value {
     Value() = default;
     Value(T _data, std::pair<Value, Value> _prev = {Value(), Value()}, char _op = '\0') {
         data = _data;
-        grad = 0.0;
+        grad = 0.00;
         prev.insert(_prev);
         op = _op;
         label = "";
@@ -92,6 +93,10 @@ class Value {
 
     T get_data() const {
         return data;
+    }
+
+    float get_grad() const {
+        return grad;
     }
 
     std::set<std::pair<Value, Value>, Comparator> get_prev() const {
