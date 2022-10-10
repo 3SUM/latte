@@ -1,20 +1,32 @@
 // g++ -std=c++20 -O3 main.cpp && ./a.out
 #include <iostream>
 
-#include "engine.hpp"
+#include "tensor.hpp"
 
 using namespace latte;
 
 int main() {
-    Value a(2.0);
-    Value b(-3.0);
-    Value c(10.0);
-    Value d = a * b + c;
-    d.set_label("d");
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-    std::cout << c << std::endl;
-    std::cout << d << std::endl;
-    std::cout << d.get_prev() << std::endl;
+    Tensor<float> A = Tensor<float>::rand(4, 4);
+    Tensor<float> B = Tensor<float>::rand(4, 4);
+
+    Tensor<float> A1 = A;
+    Tensor<float> B1 = B;
+
+    Tensor<int> A2 = Tensor<int>::zeros(2, 2);
+    Tensor<float> B2 = Tensor<float>::zeros(2, 2);
+
+    std::cout << "A\n"
+              << A << "\n\n";
+    std::cout << "A1\n"
+              << A1 << "\n\n";
+    std::cout << "B\n"
+              << B << "\n\n";
+    std::cout << "B1\n"
+              << B1 << "\n\n";
+    std::cout << "A2\n"
+              << A2 << "\n\n";
+    std::cout << "B2\n"
+              << B2 << "\n\n";
+
     return 0;
 }
