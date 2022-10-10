@@ -25,6 +25,7 @@ class Tensor {
         rows = _rows;
         cols = _cols;
         data = new T[rows * cols];
+
         if (_data) {
             std::memcpy(data, _data, rows * cols * sizeof(T));
         } else {
@@ -36,6 +37,7 @@ class Tensor {
         if (data) {
             delete data;
         }
+
         rows = 0;
         cols = 0;
         data = nullptr;
@@ -45,6 +47,7 @@ class Tensor {
         rows = rhs.rows;
         cols = rhs.cols;
         data = new T[rows * cols];
+
         if (rhs.data) {
             std::memcpy(data, rhs.data, rows * cols * sizeof(T));
         } else {
@@ -55,15 +58,18 @@ class Tensor {
     const Tensor<T>& operator=(const Tensor<T>& rhs) {
         this->rows = rhs.rows;
         this->cols = rhs.cols;
+
         if (this->data) {
             delete data;
         }
+
         this->data = new T[this->rows * this->cols];
         if (rhs.data) {
             std::memcpy(this->data, rhs.data, this->rows * this->cols * sizeof(T));
         } else {
             memset(this->data, {}, this->rows * this->cols * sizeof(T));
         }
+
         return *this;
     }
 
@@ -92,11 +98,11 @@ class Tensor {
             std::cout << "ERROR! Tensor::rand only supports floating-point types." << std::endl;
             return zeros(_rows, _cols);
         }
-        auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-        auto mt_rand = std::bind(std::uniform_real_distribution<T>(0, 1),
-                                 std::mt19937(seed));
 
         Tensor tensor = Tensor(_rows, _cols);
+
+        auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+        auto mt_rand = std::bind(std::uniform_real_distribution<T>(0, 1), std::mt19937(seed));
         for (size_t i = 0; i < _rows * _cols; i++) {
             tensor.data[i] = mt_rand();
         }
